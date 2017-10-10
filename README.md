@@ -27,10 +27,10 @@ Please feel free to ask questions along the way if you run into any issues.
   
     OR
     
-    (B) Each user keystroke initiates the search populates the results section dynamically (or "No Results Found").
+    (B) Each user keystroke initiates the search and populates the results section dynamically (or "No Results Found").
 
 - The search returns a grid of hotel cards (please see attached design, available in .sketch or .pdf here.)
-- Each hotel card contains a photo of the card (please use `hotrooms_large_url` )
+- Each hotel card contains a photo of the hotel (please use `hotrooms_large_url` )
 - Each hotel card contains a caption (see design) that lists the atmosphere and style of the hotel
 - Responsive (the hotel cards should collapse to 1 column layout on mobile and expand to width of the page on desktop)
 - Ability to "save" the hotels you love by clicking on the gray heart. (Do not use a database for this. The hotels should only be "saved" for the user session in javascript)
@@ -38,7 +38,7 @@ Please feel free to ask questions along the way if you run into any issues.
 - There should be 2 routes home ("/") and a page of the bookmarked hotels ("/bookmarked-hotels"). 
 
 ## Extra Credit
-- Hover animations on the Hotel Cards so that hovering on the image animates the height of the caption to shows more information about the hotel (choose anything from the returned data).
+- Hover animation on the Hotel Cards so that hovering on the image animates the height of the caption to show more information about the hotel (choose anything from the returned data).
 - Ability to filter the results by style and atmosphere (please see design for layout)
 - Ability to remove a hotel from your favorites from the "/favorite-hotels" route. (please see design for layout.)
 - Tests
