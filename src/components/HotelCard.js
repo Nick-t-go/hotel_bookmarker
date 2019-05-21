@@ -29,7 +29,10 @@ class HotelCard extends Component {
 					</div>
 					<div className="hotel-name">{hotel.hotel_name}</div>
 				</div>
-				<div className="card-lower">Lower Card</div>
+				<div className="card-lower">
+					<li>{hotel.criteria.style}</li>
+					<li>{hotel.criteria.atmosphere}</li>
+				</div>
 			</div>
 		);
 	}

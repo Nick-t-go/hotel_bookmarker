@@ -115,6 +115,13 @@ input:focus {
   font-size: large;
 }
 
+.card-lower {
+  height: 45px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .filter-text {
   margin: 26px 30px;
 }
