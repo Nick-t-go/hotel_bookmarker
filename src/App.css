@@ -108,6 +108,11 @@ input:focus {
   margin-left: 20px;
 }
 
+.filter-text {
+  display: flex;
+  justify-content: space-between;
+}
+
 .fav-list {
   list-style: none;
   text-align: left;

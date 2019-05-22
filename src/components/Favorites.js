@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 class Favorites extends Component {
 	removeFavorite = e => {
-		console.log(e.target.dataset.hotel_id);
 		const { remove, favorites } = this.props;
 		const id = Number(e.target.dataset.hotel_id);
 		const hotelToBeRemoved = favorites.find(hotel => hotel.hotel_id === id);

@@ -46,8 +46,8 @@ class TodoDash extends Component {
 		url.search = new URLSearchParams(params);
 		const response = await fetch(url);
 		const json = await response.json();
-		console.log(json);
 		this.setState({ hotels: json.hotels });
+		console.log(json.hotels);
 	};
 
 	componentDidMount() {}
