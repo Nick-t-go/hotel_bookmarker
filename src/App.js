@@ -36,7 +36,6 @@ class App extends Component {
 
 	componentDidMount() {
 		localforage.getItem("tabletHotel").then(favorites => {
-			console.log(favorites);
 			this.setState({ favorites });
 		});
 	}
