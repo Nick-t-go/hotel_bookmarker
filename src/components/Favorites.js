@@ -5,7 +5,7 @@ class Favorites extends Component {
 		const { remove, favorites } = this.props;
 		const id = Number(e.target.dataset.hotel_id);
 		const hotelToBeRemoved = favorites.find(hotel => hotel.hotel_id === id);
-		this.props.remove(hotelToBeRemoved);
+		remove(hotelToBeRemoved);
 	};
 
 	render() {

@@ -1,22 +1,20 @@
 import React from "react";
 import logo from "../tablet-logo-445x110@2x.png";
+import { Link } from "react-router-dom";
 
-const Nav = ({ ui, changeUI }) => {
+const Nav = ({ location }) => {
+	console.log(location);
 	return (
 		<div data-test="component-nav" className="flex-between">
 			<img src={logo} alt="logo" className="App-logo nav-item" />
-			{ui === "search" ? (
-				<div
-					data-ui="favorites"
-					className="nav-item"
-					onClick={changeUI}
-				>
-					My Favorite Hotels
-				</div>
+			{location.pathname === "/" ? (
+				<Link to="/bookmarked-hotels">
+					<div className="nav-item">My Favorite Hotels</div>
+				</Link>
 			) : (
-				<div data-ui="search" className="nav-item" onClick={changeUI}>
-					Back To Search
-				</div>
+				<Link to="/">
+					<div className="nav-item">Back To Search</div>
+				</Link>
 			)}
 		</div>
 	);

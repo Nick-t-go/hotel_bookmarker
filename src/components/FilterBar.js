@@ -7,14 +7,7 @@ class FilterBar extends Component {
 		super(props);
 
 		this.state = {
-			show: false,
-			hotelStyles: ["Happening", "Lively", "Quiet", "Secluded"],
-			atmosphere: [
-				"Contemporary Classic",
-				"Cutting Edge",
-				"Modern Design",
-				"Traditional Elegance"
-			]
+			show: false
 		};
 	}
 
@@ -24,7 +17,8 @@ class FilterBar extends Component {
 
 	render() {
 		const favorites = this.props.favorites.length;
-		const { atmosphere, hotelStyles } = this.state;
+		const { show } = this.state;
+		const { atmosphere, hotelStyles } = this.props;
 		return (
 			<Fragment>
 				<div className="flex-between">
@@ -33,35 +27,37 @@ class FilterBar extends Component {
 						<img
 							src={this.state.show ? ChevronUp : ChevronDown}
 							onClick={this.toggleShow}
+							alt={this.state.show ? "ChevronUp" : "ChevronDown"}
 						/>
 					</div>
 					{favorites > 0 && (
 						<div className="nav-item">{`${favorites} Saved Hotels`}</div>
 					)}
 				</div>
-				<div>
-					<form className="filter-form">
-						<div className="filter-section">
-							Atmosphere:
-							{atmosphere.map(atmos => (
-								<label>
-									<input name={atmos} type="checkbox" />
-									{atmos}
-								</label>
-							))}
-						</div>
-						<div className="filter-section">
-							Style:
-							{hotelStyles.map(hStyle => (
-								<label>
-									<input name={hStyle} type="checkbox" />
-									{hStyle}
-								</label>
-							))}
-						</div>
-					</form>
-					{}
-				</div>
+				{show && (
+					<div>
+						<form className="filter-form">
+							<div className="filter-section">
+								Atmosphere:
+								{Object.entries(atmosphere).map(([key, val]) => (
+									<label key={key}>
+										<input name={key} type="checkbox" checked={val} />
+										{atmos}
+									</label>
+								))}
+							</div>
+							<div className="filter-section">
+								Style:
+								{Object.entries(hotelStyles).map(([key, val]) => (
+									<label key={key}>
+										<input name={key} type="checkbox" checked={val} />
+										{hStyle}
+									</label>
+								))}
+							</div>
+						</form>
+					</div>
+				)}
 			</Fragment>
 		);
 	}

@@ -1,36 +1,28 @@
-import React, { Component, Fragment } from "react";
-import Nav from "./Nav";
+import React, { Component } from "react";
 import SearchBar from "./SearchBar";
 import FilterBar from "./FilterBar";
 import HotelCard from "./HotelCard";
-import Favorites from "./Favorites";
 
-class TodoDash extends Component {
+class HotelDash extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			ui: "search",
-			favorites: [],
-			search: null,
 			hotels: [],
-			favorites: []
+			hotelStyles: {
+				Happening: false,
+				Lively: false,
+				Quiet: false,
+				Secluded: false
+			},
+			atmosphere: {
+				"Contemporary Classic": false,
+				"Cutting Edge": false,
+				"Modern Design": false,
+				"Traditional Elegance": false
+			}
 		};
 	}
-
-	changeUI = e => {
-		this.setState({ ui: e.target.dataset.ui });
-	};
-
-	addToFavorites = hotel => {
-		this.setState({ favorites: [...this.state.favorites, hotel] });
-	};
-
-	removeFromFavorites = hotel => {
-		this.setState({
-			favorites: this.state.favorites.filter(h => h.hotel_id !== hotel.hotel_id)
-		});
-	};
 
 	handleSearch = async e => {
 		const url = new URL("https://www.tablethotels.com/_api/term_search");
@@ -50,36 +42,33 @@ class TodoDash extends Component {
 		console.log(json.hotels);
 	};
 
-	componentDidMount() {}
-
 	render() {
-		const { ui, hotels, userInput, favorites } = this.state;
+		const { hotels, userInput, hotelStyles, atmosphere } = this.state;
+		const { favorites, addToFavorites, removeFromFavorites } = this.props;
 		const fav_ids = favorites.map(hotel => hotel.hotel_id);
+
 		return (
 			<div className="container">
-				<Nav ui={ui} changeUI={this.changeUI} />
-				{ui === "search" ? (
-					<Fragment>
-						<SearchBar userInput={userInput} handleSearch={this.handleSearch} />
-						<FilterBar favorites={favorites} />
-						<div className="hotel-grid">
-							{hotels.map(hotel => (
-								<HotelCard
-									key={hotel._source.hotel_id}
-									hotel={hotel._source}
-									favorite={fav_ids.includes(hotel._source.hotel_id)}
-									add={this.addToFavorites}
-									remove={this.removeFromFavorites}
-								/>
-							))}
-						</div>
-					</Fragment>
-				) : (
-					<Favorites favorites={favorites} remove={this.removeFromFavorites} />
-				)}
+				<SearchBar handleSearch={this.handleSearch} />
+				<FilterBar
+					favorites={favorites}
+					hotelStyles={hotelStyles}
+					atmosphere={atmosphere}
+				/>
+				<div className="hotel-grid">
+					{hotels.map(hotel => (
+						<HotelCard
+							key={hotel._source.hotel_id}
+							hotel={hotel._source}
+							favorite={fav_ids.includes(hotel._source.hotel_id)}
+							add={addToFavorites}
+							remove={removeFromFavorites}
+						/>
+					))}
+				</div>
 			</div>
 		);
 	}
 }
 
-export default TodoDash;
+export default HotelDash;
