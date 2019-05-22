@@ -50,29 +50,30 @@ class HotelDash extends Component {
 
 	filterHotels = () => {
 		const { atmosphere, hotelStyles, hotels } = this.state;
+		//check if any filters are selected for each category
 		const activeAtmosphereFilter = Object.keys(atmosphere).filter(
 			key => atmosphere[key]
 		);
 		const activeStylesFilter = Object.keys(hotelStyles).filter(
 			key => hotelStyles[key]
 		);
-		console.log(activeStylesFilter, activeAtmosphereFilter);
+
 		const activeStyles = activeStylesFilter.length;
 		const activeAtmosphere = activeAtmosphereFilter.length;
+
 		if (activeStyles > 0 || activeAtmosphere > 0) {
-			console.log("in here");
 			const filtered = hotels.filter(hotel => {
+				//if there are no filters selected OR item is included in filter it passes
 				const atCheck =
 					activeAtmosphere === 0 ||
 					activeAtmosphereFilter.includes(hotel._source.criteria.atmosphere);
-				console.log(atCheck, hotel._source.criteria.atmosphere);
 				const styleCheck =
 					activeStyles === 0 ||
 					activeStylesFilter.includes(hotel._source.criteria.style);
-				console.log(styleCheck, hotel._source.criteria.style);
+				//hotel must meet criteria of both filters
 				return atCheck && styleCheck;
 			});
-			console.log(filtered);
+
 			return filtered;
 		} else {
 			return hotels;
@@ -80,7 +81,7 @@ class HotelDash extends Component {
 	};
 
 	render() {
-		const { hotels, userInput, hotelStyles, atmosphere } = this.state;
+		const { hotelStyles, atmosphere } = this.state;
 		const { favorites, addToFavorites, removeFromFavorites } = this.props;
 		const fav_ids = favorites.map(hotel => hotel.hotel_id);
 

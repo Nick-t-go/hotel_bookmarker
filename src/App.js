@@ -26,9 +26,7 @@ class App extends Component {
 
 	removeFromFavorites = hotel => {
 		this.setState({
-			favorites: this.state.favorites.filter(
-				h => h.hotel_id !== hotel.hotel_id
-			)
+			favorites: this.state.favorites.filter(h => h.hotel_id !== hotel.hotel_id)
 		});
 	};
 
