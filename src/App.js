@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
+import localforage from "localforage";
 import HotelDash from "./components/HotelDash";
 import Nav from "./components/Nav";
 import Favorites from "./components/Favorites";
@@ -21,14 +22,24 @@ class App extends Component {
 	};
 
 	addToFavorites = hotel => {
+		localforage.setItem("tabletHotel", [...this.state.favorites, hotel]);
 		this.setState({ favorites: [...this.state.favorites, hotel] });
 	};
 
 	removeFromFavorites = hotel => {
-		this.setState({
-			favorites: this.state.favorites.filter(h => h.hotel_id !== hotel.hotel_id)
-		});
+		const favorites = this.state.favorites.filter(
+			h => h.hotel_id !== hotel.hotel_id
+		);
+		this.setState({ favorites });
+		localforage.setItem("tabletHotel", favorites);
 	};
+
+	componentDidMount() {
+		localforage.getItem("tabletHotel").then(favorites => {
+			console.log(favorites);
+			this.setState({ favorites });
+		});
+	}
 
 	render() {
 		const { favorites } = this.state;
