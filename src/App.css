@@ -137,6 +137,12 @@
   display: flex;
 }
 
+@media only screen and (max-width: 400px) {
+  .filter-form {
+    font-size: 10px;
+  }
+}
+
 .filter-section {
   display: flex;
   flex-direction: column;

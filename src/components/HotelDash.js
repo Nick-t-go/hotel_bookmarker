@@ -17,7 +17,7 @@ class HotelDash extends Component {
 			},
 			hotelStyles: {
 				"Contemporary Classic": false,
-				"Cutting Edge": false,
+				"Cutting-Edge": false,
 				"Modern Design": false,
 				"Traditional Elegance": false
 			}
@@ -45,7 +45,6 @@ class HotelDash extends Component {
 		const response = await fetch(url);
 		const json = await response.json();
 		this.setState({ hotels: json.hotels });
-		console.log(json.hotels);
 	};
 
 	filterHotels = () => {
