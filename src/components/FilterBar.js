@@ -15,6 +15,14 @@ class FilterBar extends Component {
 		this.setState({ show: !this.state.show });
 	};
 
+	onChange = e => {
+		e.persist();
+		const filter = e.target.dataset.filter;
+		const value = e.target.checked;
+		const key = e.target.name;
+		this.props.toggle(filter, key, value);
+	};
+
 	render() {
 		const favorites = this.props.favorites.length;
 		const { show } = this.state;
@@ -41,8 +49,14 @@ class FilterBar extends Component {
 								Atmosphere:
 								{Object.entries(atmosphere).map(([key, val]) => (
 									<label key={key}>
-										<input name={key} type="checkbox" checked={val} />
-										{atmos}
+										<input
+											name={key}
+											type="checkbox"
+											checked={val}
+											onChange={this.onChange}
+											data-filter="atmosphere"
+										/>
+										{key}
 									</label>
 								))}
 							</div>
@@ -50,8 +64,14 @@ class FilterBar extends Component {
 								Style:
 								{Object.entries(hotelStyles).map(([key, val]) => (
 									<label key={key}>
-										<input name={key} type="checkbox" checked={val} />
-										{hStyle}
+										<input
+											name={key}
+											type="checkbox"
+											checked={val}
+											onChange={this.onChange}
+											data-filter="hotelStyles"
+										/>
+										{key}
 									</label>
 								))}
 							</div>

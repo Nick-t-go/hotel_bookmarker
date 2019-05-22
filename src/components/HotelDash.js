@@ -9,13 +9,13 @@ class HotelDash extends Component {
 
 		this.state = {
 			hotels: [],
-			hotelStyles: {
+			atmosphere: {
 				Happening: false,
 				Lively: false,
 				Quiet: false,
 				Secluded: false
 			},
-			atmosphere: {
+			hotelStyles: {
 				"Contemporary Classic": false,
 				"Cutting Edge": false,
 				"Modern Design": false,
@@ -23,6 +23,12 @@ class HotelDash extends Component {
 			}
 		};
 	}
+
+	toggleFilter = (filter, key, value) => {
+		this.setState({
+			[filter]: { ...this.state[filter], [key]: value }
+		});
+	};
 
 	handleSearch = async e => {
 		const url = new URL("https://www.tablethotels.com/_api/term_search");
@@ -42,6 +48,37 @@ class HotelDash extends Component {
 		console.log(json.hotels);
 	};
 
+	filterHotels = () => {
+		const { atmosphere, hotelStyles, hotels } = this.state;
+		const activeAtmosphereFilter = Object.keys(atmosphere).filter(
+			key => atmosphere[key]
+		);
+		const activeStylesFilter = Object.keys(hotelStyles).filter(
+			key => hotelStyles[key]
+		);
+		console.log(activeStylesFilter, activeAtmosphereFilter);
+		const activeStyles = activeStylesFilter.length;
+		const activeAtmosphere = activeAtmosphereFilter.length;
+		if (activeStyles > 0 || activeAtmosphere > 0) {
+			console.log("in here");
+			const filtered = hotels.filter(hotel => {
+				const atCheck =
+					activeAtmosphere === 0 ||
+					activeAtmosphereFilter.includes(hotel._source.criteria.atmosphere);
+				console.log(atCheck, hotel._source.criteria.atmosphere);
+				const styleCheck =
+					activeStyles === 0 ||
+					activeStylesFilter.includes(hotel._source.criteria.style);
+				console.log(styleCheck, hotel._source.criteria.style);
+				return atCheck && styleCheck;
+			});
+			console.log(filtered);
+			return filtered;
+		} else {
+			return hotels;
+		}
+	};
+
 	render() {
 		const { hotels, userInput, hotelStyles, atmosphere } = this.state;
 		const { favorites, addToFavorites, removeFromFavorites } = this.props;
@@ -54,9 +91,10 @@ class HotelDash extends Component {
 					favorites={favorites}
 					hotelStyles={hotelStyles}
 					atmosphere={atmosphere}
+					toggle={this.toggleFilter}
 				/>
 				<div className="hotel-grid">
-					{hotels.map(hotel => (
+					{this.filterHotels().map(hotel => (
 						<HotelCard
 							key={hotel._source.hotel_id}
 							hotel={hotel._source}
