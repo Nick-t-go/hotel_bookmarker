@@ -93,10 +93,33 @@ input:focus {
 }
 .card-heart {
   position: absolute;
-  top: 2px;
-  right: 2px;
+  top: 5px;
+  right: 5px;
   height: 39px;
   width: 42px;
+}
+
+.favorite {
+  color: var(--brand-color);
+  font-size: 24px;
+}
+
+.favorite-remove {
+  margin-left: 20px;
+}
+
+.fav-list {
+  list-style: none;
+  text-align: left;
+}
+
+.fav-list li::before {
+  content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  color: var(--brand-color);
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
 }
 
 .hotel-name {

@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Nav from "./Nav";
 import SearchBar from "./SearchBar";
 import FilterBar from "./FilterBar";
 import HotelCard from "./HotelCard";
+import Favorites from "./Favorites";
 
 class TodoDash extends Component {
 	constructor(props) {
@@ -12,12 +13,23 @@ class TodoDash extends Component {
 			ui: "search",
 			favorites: [],
 			search: null,
-			hotels: []
+			hotels: [],
+			favorites: []
 		};
 	}
 
 	changeUI = e => {
 		this.setState({ ui: e.target.dataset.ui });
+	};
+
+	addToFavorites = hotel => {
+		this.setState({ favorites: [...this.state.favorites, hotel] });
+	};
+
+	removeFromFavorites = hotel => {
+		this.setState({
+			favorites: this.state.favorites.filter(h => h.hotel_id !== hotel.hotel_id)
+		});
 	};
 
 	handleSearch = async e => {
@@ -41,17 +53,30 @@ class TodoDash extends Component {
 	componentDidMount() {}
 
 	render() {
-		const { ui, userInput, hotels } = this.state;
+		const { ui, hotels, userInput, favorites } = this.state;
+		const fav_ids = favorites.map(hotel => hotel.hotel_id);
 		return (
 			<div className="container">
 				<Nav ui={ui} changeUI={this.changeUI} />
-				<SearchBar userInput={userInput} handleSearch={this.handleSearch} />
-				<FilterBar />
-				<div className="hotel-grid">
-					{hotels.map(hotel => (
-						<HotelCard key={hotel._id} hotel={hotel._source} />
-					))}
-				</div>
+				{ui === "search" ? (
+					<Fragment>
+						<SearchBar userInput={userInput} handleSearch={this.handleSearch} />
+						<FilterBar favorites={favorites} />
+						<div className="hotel-grid">
+							{hotels.map(hotel => (
+								<HotelCard
+									key={hotel._source.hotel_id}
+									hotel={hotel._source}
+									favorite={fav_ids.includes(hotel._source.hotel_id)}
+									add={this.addToFavorites}
+									remove={this.removeFromFavorites}
+								/>
+							))}
+						</div>
+					</Fragment>
+				) : (
+					<Favorites favorites={favorites} remove={this.removeFromFavorites} />
+				)}
 			</div>
 		);
 	}

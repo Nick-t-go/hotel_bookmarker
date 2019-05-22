@@ -6,10 +6,13 @@ class FilterBar extends Component {
 	};
 
 	render() {
+		const favorites = this.props.favorites.length;
 		return (
 			<div className="flex-between">
 				<div className="filter-text">Filter by</div>
-				<div className="nav-item">Saved Hotels</div>
+				{favorites > 0 && (
+					<div className="nav-item">{`${favorites} Saved Hotels`}</div>
+				)}
 			</div>
 		);
 	}

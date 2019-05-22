@@ -4,7 +4,6 @@ import HeartUnselected from "../heart-unselected.svg";
 
 class HotelCard extends Component {
 	setBgImage = background => {
-		console.log("hey", background);
 		return {
 			backgroundImage: `linear-gradient( rgba(255,255,255,.6), rgba(255,255,255,.6) ), url(https://${background})`,
 			backgroundSize: "cover",
@@ -15,9 +14,15 @@ class HotelCard extends Component {
 		};
 	};
 
+	addFavorite = () => {
+		this.props.add(this.props.hotel);
+	};
+	removeFavorite = () => {
+		this.props.remove(this.props.hotel);
+	};
+
 	render() {
-		const { hotel } = this.props;
-		console.log(hotel.images[0].hotrooms_large_url);
+		const { hotel, favorite } = this.props;
 		return (
 			<div className="card">
 				<div
@@ -25,7 +30,19 @@ class HotelCard extends Component {
 					style={this.setBgImage(hotel.images[0].hotrooms_large_url)}
 				>
 					<div className="card-heart">
-						<img src={HeartSelected} alt="HeartSelected" />
+						{favorite ? (
+							<img
+								src={HeartSelected}
+								alt="HeartSelected"
+								onClick={this.removeFavorite}
+							/>
+						) : (
+							<img
+								src={HeartUnselected}
+								alt="HeartUnselected"
+								onClick={this.addFavorite}
+							/>
+						)}
 					</div>
 					<div className="hotel-name">{hotel.hotel_name}</div>
 				</div>
