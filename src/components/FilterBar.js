@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import ChevronUp from "../chevron-thin-up.svg";
 import ChevronDown from "../chevron-thin-down.svg";
 
@@ -8,7 +8,7 @@ class FilterBar extends Component {
 
 		this.state = {
 			show: false,
-			styles: ["Happening", "Lively", "Quiet", "Secluded"],
+			hotelStyles: ["Happening", "Lively", "Quiet", "Secluded"],
 			atmosphere: [
 				"Contemporary Classic",
 				"Cutting Edge",
@@ -24,20 +24,45 @@ class FilterBar extends Component {
 
 	render() {
 		const favorites = this.props.favorites.length;
+		const { atmosphere, hotelStyles } = this.state;
 		return (
-			<div className="flex-between">
-				<div className="filter-text">
-					<div>Filter by</div>
-
-					<img
-						src={this.state.show ? ChevronUp : ChevronDown}
-						onClick={this.toggleShow}
-					/>
+			<Fragment>
+				<div className="flex-between">
+					<div className="filter-text">
+						<div>Filter by</div>
+						<img
+							src={this.state.show ? ChevronUp : ChevronDown}
+							onClick={this.toggleShow}
+						/>
+					</div>
+					{favorites > 0 && (
+						<div className="nav-item">{`${favorites} Saved Hotels`}</div>
+					)}
 				</div>
-				{favorites > 0 && (
-					<div className="nav-item">{`${favorites} Saved Hotels`}</div>
-				)}
-			</div>
+				<div>
+					<form className="filter-form">
+						<div className="filter-section">
+							Atmosphere:
+							{atmosphere.map(atmos => (
+								<label>
+									<input name={atmos} type="checkbox" />
+									{atmos}
+								</label>
+							))}
+						</div>
+						<div className="filter-section">
+							Style:
+							{hotelStyles.map(hStyle => (
+								<label>
+									<input name={hStyle} type="checkbox" />
+									{hStyle}
+								</label>
+							))}
+						</div>
+					</form>
+					{}
+				</div>
+			</Fragment>
 		);
 	}
 }
