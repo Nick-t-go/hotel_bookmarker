@@ -1,7 +1,6 @@
 import React from "react";
 
 const FilterList = ({ header, dataKey, options, onChange }) => {
-	console.log(header, dataKey);
 	return (
 		<div className="filter-section">
 			{header}:
