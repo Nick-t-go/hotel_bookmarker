@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import FilterList from "./FilterList";
 import ChevronUp from "../chevron-thin-up.svg";
 import ChevronDown from "../chevron-thin-down.svg";
 
@@ -20,6 +21,7 @@ class FilterBar extends Component {
 		const filter = e.target.dataset.filter;
 		const value = e.target.checked;
 		const key = e.target.name;
+		console.log(filter, value, key);
 		this.props.toggle(filter, key, value);
 	};
 
@@ -45,36 +47,18 @@ class FilterBar extends Component {
 				{show && (
 					<div>
 						<form className="filter-form">
-							<div className="filter-section">
-								Atmosphere:
-								{Object.entries(atmosphere).map(([key, val]) => (
-									<label key={key}>
-										<input
-											name={key}
-											type="checkbox"
-											checked={val}
-											onChange={this.onChange}
-											data-filter="atmosphere"
-										/>
-										{key}
-									</label>
-								))}
-							</div>
-							<div className="filter-section">
-								Style:
-								{Object.entries(hotelStyles).map(([key, val]) => (
-									<label key={key}>
-										<input
-											name={key}
-											type="checkbox"
-											checked={val}
-											onChange={this.onChange}
-											data-filter="hotelStyles"
-										/>
-										{key}
-									</label>
-								))}
-							</div>
+							<FilterList
+								header="Atmosphere"
+								dataKey="atmosphere"
+								options={atmosphere}
+								onChange={this.onChange}
+							/>
+							<FilterList
+								header="Style"
+								dataKey="hotelStyles"
+								options={hotelStyles}
+								onChange={this.onChange}
+							/>
 						</form>
 					</div>
 				)}

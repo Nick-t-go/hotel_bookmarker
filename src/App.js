@@ -17,10 +17,6 @@ class App extends Component {
 		};
 	}
 
-	changeUI = e => {
-		this.setState({ ui: e.target.dataset.ui });
-	};
-
 	addToFavorites = hotel => {
 		localforage.setItem("tabletHotel", [...this.state.favorites, hotel]);
 		this.setState({ favorites: [...this.state.favorites, hotel] });

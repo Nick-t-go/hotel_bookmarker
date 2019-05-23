@@ -89,7 +89,6 @@
   margin: 16px;
   width: 300px;
   height: 345px;
-  border: 1px solid black;
 }
 .card-heart {
   position: absolute;
@@ -165,6 +164,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  border: 0.5px solid black;
 }
 
 .filter-text {
