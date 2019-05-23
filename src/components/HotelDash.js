@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import SearchBar from "./SearchBar";
 import FilterBar from "./FilterBar";
 import HotelCard from "./HotelCard";
+import MapView from "./MapView";
+import { Route } from "react-router-dom";
 
 class HotelDash extends Component {
 	constructor(props) {
@@ -83,6 +85,7 @@ class HotelDash extends Component {
 		const { hotelStyles, atmosphere } = this.state;
 		const { favorites, addToFavorites, removeFromFavorites } = this.props;
 		const fav_ids = favorites.map(hotel => hotel.hotel_id);
+		console.log(this.props);
 
 		return (
 			<div className="container">
@@ -93,17 +96,21 @@ class HotelDash extends Component {
 					atmosphere={atmosphere}
 					toggle={this.toggleFilter}
 				/>
-				<div className="hotel-grid">
-					{this.filterHotels().map(hotel => (
-						<HotelCard
-							key={hotel._source.hotel_id}
-							hotel={hotel._source}
-							favorite={fav_ids.includes(hotel._source.hotel_id)}
-							add={addToFavorites}
-							remove={removeFromFavorites}
-						/>
-					))}
-				</div>
+				{false ? (
+					<div className="hotel-grid">
+						{this.filterHotels().map(hotel => (
+							<HotelCard
+								key={hotel._source.hotel_id}
+								hotel={hotel._source}
+								favorite={fav_ids.includes(hotel._source.hotel_id)}
+								add={addToFavorites}
+								remove={removeFromFavorites}
+							/>
+						))}
+					</div>
+				) : (
+					<MapView hotels={this.filterHotels()} />
+				)}
 			</div>
 		);
 	}

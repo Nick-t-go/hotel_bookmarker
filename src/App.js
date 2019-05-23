@@ -49,6 +49,7 @@ class App extends Component {
 						path="/"
 						render={props => (
 							<HotelDash
+								{...props}
 								favorites={favorites}
 								addToFavorites={this.addToFavorites}
 								removeFromFavorites={this.removeFromFavorites}
