@@ -67,7 +67,9 @@ class HotelDash extends Component {
 				//if there are no filters selected OR item is included in filter it passes
 				const atCheck =
 					activeAtmosphere === 0 ||
-					activeAtmosphereFilter.includes(hotel._source.criteria.atmosphere);
+					activeAtmosphereFilter.includes(
+						hotel._source.criteria.atmosphere
+					);
 				const styleCheck =
 					activeStyles === 0 ||
 					activeStylesFilter.includes(hotel._source.criteria.style);
@@ -85,7 +87,6 @@ class HotelDash extends Component {
 		const { hotelStyles, atmosphere } = this.state;
 		const { favorites, addToFavorites, removeFromFavorites } = this.props;
 		const fav_ids = favorites.map(hotel => hotel.hotel_id);
-		console.log(this.props);
 
 		return (
 			<div className="container">
@@ -96,13 +97,15 @@ class HotelDash extends Component {
 					atmosphere={atmosphere}
 					toggle={this.toggleFilter}
 				/>
-				{false ? (
+				{true ? (
 					<div className="hotel-grid">
 						{this.filterHotels().map(hotel => (
 							<HotelCard
 								key={hotel._source.hotel_id}
 								hotel={hotel._source}
-								favorite={fav_ids.includes(hotel._source.hotel_id)}
+								favorite={fav_ids.includes(
+									hotel._source.hotel_id
+								)}
 								add={addToFavorites}
 								remove={removeFromFavorites}
 							/>

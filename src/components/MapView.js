@@ -4,7 +4,7 @@ import {
 	Map as LeafletMap,
 	TileLayer,
 	Rectangle,
-	LayerGroup,
+	FeatureGroup,
 	Circle
 } from "react-leaflet";
 
@@ -13,10 +13,17 @@ const inner = [[49.505, -2.09], [53.505, 2.09]];
 const center = [51.505, -0.09];
 const rectangle = [[51.49, -0.08], [51.5, -0.06]];
 
-export default class MapView extends Component<{}, State> {
-	state = {
-		bounds: outer
-	};
+export default class HotelDash extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			bounds: outer,
+			height: "300px"
+		};
+
+		this.myRef = React.createRef();
+	}
 
 	onClickInner = () => {
 		this.setState({ bounds: inner });
@@ -26,33 +33,52 @@ export default class MapView extends Component<{}, State> {
 		this.setState({ bounds: outer });
 	};
 
+	layerAdd = e => {
+		this.setState({ bounds: e.target.getBounds() });
+	};
+
+	load = e => {
+		if (
+			this.myRef.current &&
+			this.state.height !==
+				window.innerHeight - this.myRef.current.container.offsetTop
+		) {
+			this.setState({
+				height:
+					window.innerHeight - this.myRef.current.container.offsetTop
+			});
+		}
+	};
+
 	render() {
+		const { hotels } = this.props;
+		this.load();
 		return (
 			<LeafletMap
+				onLoad={this.load}
+				load={this.load}
+				ref={this.myRef}
 				bounds={this.state.bounds}
-				style={{ height: "500px", width: "100vw" }}
+				style={{ height: this.state.height }}
+				whenReady={this.load}
 			>
 				<TileLayer
 					attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
-				<LayerGroup>
-					<Circle center={center} fillColor="blue" radius={200} />
-					<Circle
-						center={center}
-						fillColor="red"
-						radius={100}
-						stroke={false}
-					/>
-					<LayerGroup>
+				<FeatureGroup onLayerAdd={this.layerAdd}>
+					{hotels.map(hotel => (
 						<Circle
-							center={[51.51, -0.08]}
-							color="green"
-							fillColor="green"
-							radius={100}
+							key={hotel._id}
+							center={[
+								hotel._source.coordinates.lat,
+								hotel._source.coordinates.lon
+							]}
+							fillColor="blue"
+							radius={200}
 						/>
-					</LayerGroup>
-				</LayerGroup>
+					))}
+				</FeatureGroup>
 			</LeafletMap>
 		);
 	}
